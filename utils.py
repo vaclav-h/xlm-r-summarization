@@ -6,12 +6,12 @@ from dataset import XLMRobertaExtDataset
 
 
 class ExtEvaluator:
-    def __init__(self, fpath, eval_size=None, pos_embed=512, eval_bs=32):
+    def __init__(self, fpath, eval_size=None, pos_embed=512, eval_bs=32, model_type="xlm-roberta-large"):
         """
         fpath : path to the evaluation dataset built using build_ext_dataset.py
         eval_size : take only the first eval_size elements of the dataset
         """
-        self.dataset = XLMRobertaExtDataset(fpath, pos_embed=pos_embed)
+        self.dataset = XLMRobertaExtDataset(fpath, pos_embed=pos_embed, model_type=model_type)
         if eval_size:
             self.dataset = torch.utils.data.Subset(self.dataset, range(eval_size))
         self.dloader = torch.utils.data.DataLoader(dataset=self.dataset,

@@ -33,7 +33,8 @@ def train(gpu, args):
     # Load dataset
     train_dataset = XLMRobertaExtDataset(fpath=cfg['trn_data'],
                                          max_src_sentences=cfg['max_src_sentences'],
-                                         pos_embed=cfg['pos_embed'])
+                                         pos_embed=cfg['pos_embed'],
+                                         model_type=cfg['model_type'])
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset,
                                                                     num_replicas=args.world_size,
                                                                     rank=gpu)
@@ -44,7 +45,7 @@ def train(gpu, args):
                                                pin_memory=True,
                                                sampler=train_sampler)
     # Load model
-    model = XLMRobertaExtModel(pos_embed=cfg['pos_embed'])
+    model = XLMRobertaExtModel(pos_embed=cfg['pos_embed'], model_type=cfg['model_type'])
     torch.cuda.set_device(gpu)
     model.cuda(gpu)
     
@@ -58,7 +59,8 @@ def train(gpu, args):
     
     # Init logging
     if gpu == 0:
-        evaluator = ExtEvaluator(cfg['eval_data'], cfg['eval_size'], cfg['pos_embed'])
+        evaluator = ExtEvaluator(cfg['eval_data'], cfg['eval_size'],
+                                 cfg['pos_embed'], model_type=cfg['model_type'])
         progress_bar = tqdm(range(num_training_steps))
         wandb.init(project=cfg['wandb_project'],  name=cfg['wandb_run'])
         wandb.watch(model, log_freq=cfg['report_freq'])

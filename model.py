@@ -16,10 +16,10 @@ class Classifier(nn.Module):
 
 
 class XLMRobertaExtModel(nn.Module):
-    def __init__(self, checkpoint=None, pos_embed=512):
+    def __init__(self, checkpoint=None, pos_embed=512, model_type="xlm-roberta-large"):
         super(XLMRobertaExtModel, self).__init__()
         
-        self.roberta = XLMRobertaModel.from_pretrained("xlm-roberta-large")
+        self.roberta = XLMRobertaModel.from_pretrained(model_type)
         
         # Copy pretrained part of embeddings and randomly initialize the rest
         if pos_embed > 512:

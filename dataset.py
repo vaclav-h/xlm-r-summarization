@@ -7,7 +7,8 @@ from torch.nn.functional import pad
 
 
 class XLMRobertaExtDataset(Dataset):
-    def __init__(self, fpath, n_samples=None, max_src_sentences=32, pos_embed=512):
+    def __init__(self, fpath, n_samples=None, max_src_sentences=32,
+                 pos_embed=512, model_type="xlm-roberta-large"):
         """
         fpath : path to jsonl file with dataset built using build_ext_dataset.py 
         """
@@ -20,7 +21,7 @@ class XLMRobertaExtDataset(Dataset):
         if n_samples is not None:
             self.samples = self.samples[:n_samples]
         
-        self.tokenizer = XLMRobertaTokenizerFast.from_pretrained("xlm-roberta-large")
+        self.tokenizer = XLMRobertaTokenizerFast.from_pretrained(model_type)
         self.enc_len = pos_embed
         self.max_src_sentences = max_src_sentences
     

@@ -2,6 +2,7 @@ def get_cfg():
     return {
         "trn_data" : "my_preprocessed_train_data.jsonl", # Dataset built using build_ext_dataset.py
         "eval_data" : "my_preprocessed_eval_data.jsonl", # Dataset built using build_ext_dataset.py
+        "model_type" : "xlm-roberta-large", # Should also work with 'xlm-roberta-base'
         "epochs" : 3,
         "warmup" : 10000, # Warm-up steps
         "batch_size" : 8,
