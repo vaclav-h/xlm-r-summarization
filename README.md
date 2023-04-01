@@ -11,7 +11,7 @@ Example:
 `python3 build_ext_dataset.py --file abstractive_dataset.jsonl -output output_file.jsonl --lang cs`
 2. **Run training**
 Edit hyperparameters in `config.py` and run `train.py`.
-Example: `python3 train.py --gpus 1` to train on single GPU or `python -m torch.distributed.launch train.py --gpus N` to train on N GPUs. Training on CPU is not supported.
+Example: `python3 train.py --gpus 1` to train on single GPU or `python3 -m torch.distributed.launch --nproc-per-node=N train.py --gpus N` to train on N GPUs. Training on CPU is not supported.
 
 We experimented with training only the [xlm-roberta-large](https://huggingface.co/xlm-roberta-large) but the smaller version [xlm-roberta-base](https://huggingface.co/xlm-roberta-base) should also work by changing the 'model_type' field in `config.py`.
 
